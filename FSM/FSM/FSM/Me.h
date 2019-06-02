@@ -1,6 +1,8 @@
 #pragma once
 #include "BaseGameEntity.h"
 #include "State.h"
+
+template<class entity_name>
 class State;
 
 enum location_type
@@ -14,7 +16,7 @@ enum location_type
 class Me : public BaseGameEntity
 {
 private:
-	State* m_pCurrentState;
+	State<Me>* m_pCurrentState;
 	location_type m_Location;
 	// should be early than those variables use them.
 	const int Max_Mood = 5;
@@ -30,7 +32,7 @@ private:
 public:
 	Me(int ID);				
 	void Update(); 
-	void ChangeState(State *pNewState);
+	void ChangeState(State<Me> *pNewState);
 	// interface
 	location_type Location()const { return m_Location; }
 	void ChangeLocation(const location_type goal) { m_Location = goal; }

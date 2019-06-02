@@ -11,7 +11,7 @@ Me::Me(int ID) : BaseGameEntity(ID),
 				m_iFatigue(0){}
 				
 
-void Me::ChangeState(State* pNewState)
+void Me::ChangeState(State<Me>* pNewState)
 {
 	assert(m_pCurrentState && pNewState);
 	m_pCurrentState->Exit(this);

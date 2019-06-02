@@ -2,7 +2,7 @@
 #include "State.h"
 #include <sys/stat.h>
 
-class GoWorkAndEarnMoney:public State
+class GoWorkAndEarnMoney:public State<Me>
 {
 private:
 	GoWorkAndEarnMoney() = default;
@@ -13,7 +13,7 @@ public:
 	virtual void Exit(Me* pMe);
 };
 
-class GoSchoolAndStudy:public State
+class GoSchoolAndStudy:public State<Me>
 {
 private:
 	GoSchoolAndStudy() = default;
@@ -24,7 +24,7 @@ public:
 	virtual void Exit(Me* pMe);
 };
 
-class GoHomeAndSleep:public State
+class GoHomeAndSleep:public State<Me>
 {
 private:
 	GoHomeAndSleep() = default;
@@ -35,7 +35,7 @@ public:
 	virtual void Exit(Me* pMe);
 };
  
-class GoBar:public State
+class GoBar:public State<Me>
 {
 private:
 	GoBar() = default;
