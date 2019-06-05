@@ -45,3 +45,14 @@ public:
 	virtual void Execute(Me* pMe);
 	virtual void Exit(Me* pMe);
 };
+
+class GoRestroom:public State<Me>
+{
+private:
+	GoRestroom() = default;
+public:
+	static GoRestroom* Instance();
+	virtual void Enter(Me*) override;
+	virtual void Execute(Me*) override;
+	virtual void Exit(Me*) override;
+};

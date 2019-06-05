@@ -1,6 +1,8 @@
 #pragma once
 #include "BaseGameEntity.h"
 #include "State.h"
+#include <string>
+#include <vector>
 
 template<class entity_name>
 class State;
@@ -12,11 +14,15 @@ enum location_type
 	company,
 	beerLady,
 };
+const std::vector<std::string> location_name = { "Sweet Home", "School", "Company", "Beer Lady" };
+
 
 class Me : public BaseGameEntity
 {
 private:
 	State<Me>* m_pCurrentState;
+	State<Me>* m_PreviousState;
+	State<Me>* m_pGlobalState;
 	location_type m_Location;
 	// should be early than those variables use them.
 	const int Max_Mood = 5;
@@ -33,8 +39,10 @@ public:
 	Me(int ID);				
 	void Update(); 
 	void ChangeState(State<Me> *pNewState);
+	void RevertToPreviousState();
 	// interface
 	location_type Location()const { return m_Location; }
+	std::string Location_name()const { return location_name[m_Location]; }
 	void ChangeLocation(const location_type goal) { m_Location = goal; }
 	int Ability()const { return m_iAbilityLevel; }
 	void SetAbilityLevel(const int val) { m_iAbilityLevel = val; }

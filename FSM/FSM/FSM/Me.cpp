@@ -15,9 +15,15 @@ void Me::ChangeState(State<Me>* pNewState)
 {
 	assert(m_pCurrentState && pNewState);
 	m_pCurrentState->Exit(this);
+	m_PreviousState = m_pCurrentState;
 	m_pCurrentState = pNewState;
 	m_pCurrentState->Enter(this);
 
+}
+
+void Me::RevertToPreviousState()
+{
+	ChangeState(m_PreviousState);
 }
 
 void Me::AddToAbility(const int val)

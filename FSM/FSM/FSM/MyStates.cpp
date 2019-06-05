@@ -63,10 +63,14 @@ void GoSchoolAndStudy::Enter(Me* pMe)
 
 void GoSchoolAndStudy::Execute(Me* pMe)
 {
+
+
 	pMe->AddToAbility(1);
 	pMe->DecreaseMood(2);
 	pMe->IncreaseFatigue(1);
 	cout << "\n" << "Me" << ": " << "Studying the courses and improving my skill levels";
+	// there should be some logic to change to the state blip.
+	pMe->ChangeState(GoRestroom::Instance());
 	if (pMe->Fatigued())
 	{
 		pMe->ChangeState(GoHomeAndSleep::Instance());
@@ -120,6 +124,8 @@ void GoHomeAndSleep::Execute(Me* pMe)
 	{
 		pMe->DecreaseFatigue(1);
 		cout << "\n" << "Me" << ": " << "zzZZZ...";
+		// there should be some logic to change to the state blip.
+		pMe->ChangeState(GoRestroom::Instance());
 	}
 }
 
@@ -147,11 +153,13 @@ void GoBar::Enter(Me* pMe)
 
 void GoBar::Execute(Me* pMe)
 {
+	
 	if (pMe->LowMood())
 	{
 		pMe->BuyTheBeer();
 		cout << "\n" << "Me" << ": " << "Ah-ha-ha Taste good enough";
-
+		// there should be some logic to change to the state blip.
+		pMe->ChangeState(GoRestroom::Instance());
 		pMe->ChangeState(GoHomeAndSleep::Instance());
 	}
 }
@@ -160,3 +168,28 @@ void GoBar::Exit(Me* pMe)
 {
 	cout << "\n" << "Me" << ": " << "Leaving the Beer Lady, feeling good";
 }
+
+GoRestroom* GoRestroom::Instance()
+{
+	static GoRestroom instance;
+	return &instance;
+}
+
+
+void GoRestroom::Enter(Me* pMe)
+{
+	cout << "\n" << "Me" << ":" << "Oh! I feel it!";
+}
+
+
+void GoRestroom::Execute(Me* pMe)
+{
+	cout << "\n" << "Me" << ":" << "I have to pee... at" << pMe->Location_name();
+	pMe->RevertToPreviousState();
+}
+
+void GoRestroom::Exit(Me* pMe)
+{
+	cout << "\n" << "Me" << ":" << "Now I go back where I belong";
+}
+
