@@ -119,6 +119,7 @@
     <ClInclude Include="MyStates.h" />
     <ClInclude Include="Me.h" />
     <ClInclude Include="State.h" />
+    <ClInclude Include="StateMachine.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />

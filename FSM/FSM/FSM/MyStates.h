@@ -1,5 +1,6 @@
 #pragma once
 #include "State.h"
+#include "Me.h"
 #include <sys/stat.h>
 
 class GoWorkAndEarnMoney:public State<Me>

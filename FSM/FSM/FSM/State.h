@@ -1,6 +1,4 @@
 ﻿#pragma once
-#include "Me.h"
-class Me;
 
 template <class entity_type>
 class State

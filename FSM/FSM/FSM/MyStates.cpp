@@ -30,11 +30,11 @@ void GoWorkAndEarnMoney::Execute(Me* pMe)
 
 	if (pMe->Fatigued())
 	{
-		pMe->ChangeState(GoHomeAndSleep::Instance());
+		pMe->GetFSM()->ChangeState(GoHomeAndSleep::Instance());
 	}
 	if (pMe->LowMood())
 	{
-		pMe->ChangeState(GoBar::Instance());
+		pMe->GetFSM()->ChangeState(GoBar::Instance());
 	}
 }
 
@@ -70,14 +70,14 @@ void GoSchoolAndStudy::Execute(Me* pMe)
 	pMe->IncreaseFatigue(1);
 	cout << "\n" << "Me" << ": " << "Studying the courses and improving my skill levels";
 	// there should be some logic to change to the state blip.
-	pMe->ChangeState(GoRestroom::Instance());
+	pMe->GetFSM()->ChangeState(GoRestroom::Instance());
 	if (pMe->Fatigued())
 	{
-		pMe->ChangeState(GoHomeAndSleep::Instance());
+		pMe->GetFSM()->ChangeState(GoHomeAndSleep::Instance());
 	}
 	if (pMe->LowMood())
 	{
-		pMe->ChangeState(GoBar::Instance());
+		pMe->GetFSM()->ChangeState(GoBar::Instance());
 	}
 }
 
@@ -113,11 +113,11 @@ void GoHomeAndSleep::Execute(Me* pMe)
 		cout << "\n" << "Me" << ": " << "What a God darn fantastic nap! Let me see where to go now...";
 		if (pMe->FeelPoor())
 		{
-			pMe->ChangeState(GoWorkAndEarnMoney::Instance());
+			pMe->GetFSM()->ChangeState(GoWorkAndEarnMoney::Instance());
 		}
 		else
 		{
-			pMe->ChangeState(GoSchoolAndStudy::Instance());
+			pMe->GetFSM()->ChangeState(GoSchoolAndStudy::Instance());
 		}
 	}
 	else
@@ -125,7 +125,7 @@ void GoHomeAndSleep::Execute(Me* pMe)
 		pMe->DecreaseFatigue(1);
 		cout << "\n" << "Me" << ": " << "zzZZZ...";
 		// there should be some logic to change to the state blip.
-		pMe->ChangeState(GoRestroom::Instance());
+		pMe->GetFSM()->ChangeState(GoRestroom::Instance());
 	}
 }
 
@@ -159,8 +159,8 @@ void GoBar::Execute(Me* pMe)
 		pMe->BuyTheBeer();
 		cout << "\n" << "Me" << ": " << "Ah-ha-ha Taste good enough";
 		// there should be some logic to change to the state blip.
-		pMe->ChangeState(GoRestroom::Instance());
-		pMe->ChangeState(GoHomeAndSleep::Instance());
+		pMe->GetFSM()->ChangeState(GoRestroom::Instance());
+		pMe->GetFSM()->ChangeState(GoHomeAndSleep::Instance());
 	}
 }
 
@@ -184,8 +184,8 @@ void GoRestroom::Enter(Me* pMe)
 
 void GoRestroom::Execute(Me* pMe)
 {
-	cout << "\n" << "Me" << ":" << "I have to pee... at" << pMe->Location_name();
-	pMe->RevertToPreviousState();
+	cout << "\n" << "Me" << ":" << "I have to pee...";
+	pMe->GetFSM()->RevertToPreviousState();
 }
 
 void GoRestroom::Exit(Me* pMe)

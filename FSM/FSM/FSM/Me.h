@@ -2,10 +2,9 @@
 #include "BaseGameEntity.h"
 #include "State.h"
 #include <string>
-#include <vector>
+#include "StateMachine.h"
 
-template<class entity_name>
-class State;
+template<class entity_name> class State;
 
 enum location_type
 {
@@ -14,15 +13,15 @@ enum location_type
 	company,
 	beerLady,
 };
-const std::vector<std::string> location_name = { "Sweet Home", "School", "Company", "Beer Lady" };
+
 
 
 class Me : public BaseGameEntity
 {
 private:
-	State<Me>* m_pCurrentState;
-	State<Me>* m_PreviousState;
-	State<Me>* m_pGlobalState;
+	// an instance of the state machine class
+	StateMachine<Me>* m_pStateMachine;
+
 	location_type m_Location;
 	// should be early than those variables use them.
 	const int Max_Mood = 5;
@@ -36,13 +35,17 @@ private:
 	int m_iFatigue;
 	
 public:
-	Me(int ID);				
-	void Update(); 
-	void ChangeState(State<Me> *pNewState);
-	void RevertToPreviousState();
+	Me(int ID);
+	~Me();
+	void Update();
+	StateMachine<Me>* GetFSM()const { return m_pStateMachine; }
+
+	// change to state machine.
+	//void ChangeState(State<Me> *pNewState);
+	//void RevertToPreviousState();
+
 	// interface
 	location_type Location()const { return m_Location; }
-	std::string Location_name()const { return location_name[m_Location]; }
 	void ChangeLocation(const location_type goal) { m_Location = goal; }
 	int Ability()const { return m_iAbilityLevel; }
 	void SetAbilityLevel(const int val) { m_iAbilityLevel = val; }

@@ -3,28 +3,40 @@
 #include "MyStates.h"
 
 Me::Me(int ID) : BaseGameEntity(ID),
-				m_pCurrentState(GoHomeAndSleep::Instance()),
 				m_Location(sweetHome),
 				m_iMoneyInCard(1000),
 				m_iMoodForDoingStuffs(Max_Mood),
 				m_iAbilityLevel(10),
-				m_iFatigue(0){}
+				m_iFatigue(0)
+{
+	// set up state machine
+	m_pStateMachine = new StateMachine<Me>(this);
+
+	m_pStateMachine->SetCurrentState(GoHomeAndSleep::Instance());
+
+	// Me class Doesn't has a global state.
+}
 				
-
-void Me::ChangeState(State<Me>* pNewState)
+Me::~Me()
 {
-	assert(m_pCurrentState && pNewState);
-	m_pCurrentState->Exit(this);
-	m_PreviousState = m_pCurrentState;
-	m_pCurrentState = pNewState;
-	m_pCurrentState->Enter(this);
-
+	delete m_pStateMachine;
 }
 
-void Me::RevertToPreviousState()
-{
-	ChangeState(m_PreviousState);
-}
+//
+//void Me::ChangeState(State<Me>* pNewState)
+//{
+//	assert(m_pCurrentState && pNewState);
+//	m_pCurrentState->Exit(this);
+//	m_PreviousState = m_pCurrentState;
+//	m_pCurrentState = pNewState;
+//	m_pCurrentState->Enter(this);
+//
+//}
+//
+//void Me::RevertToPreviousState()
+//{
+//	ChangeState(m_PreviousState);
+//}
 
 void Me::AddToAbility(const int val)
 {
@@ -61,8 +73,9 @@ bool Me::FeelPoor() const
 
 void Me::Update()
 {
-	if (m_pCurrentState)
-	{
-		m_pCurrentState->Execute(this);
-	}
+	//if (m_pCurrentState)
+	//{
+	//	m_pCurrentState->Execute(this);
+	//}
+	m_pStateMachine->Update();
 }
