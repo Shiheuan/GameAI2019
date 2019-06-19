@@ -33,3 +33,16 @@ public:
 	virtual void Execute(Robot* pr) override;
 	virtual void Exit(Robot* pr) override;
 };
+
+class RobotGlobalState : public State<Robot>
+{
+private:
+	RobotGlobalState(){}
+	RobotGlobalState(const RobotGlobalState&);
+	RobotGlobalState& operator=(const RobotGlobalState&);
+public:
+	static RobotGlobalState* Instance();
+	virtual void Enter(Robot* pr) override{};
+	virtual void Execute(Robot* pr) override;
+	virtual void Exit(Robot* pr) override{};
+};

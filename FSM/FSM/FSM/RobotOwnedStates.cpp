@@ -2,7 +2,6 @@
 #include "Robot.h"
 #include <iostream>
 
-
 DoHouseWork* DoHouseWork::Instance()
 {
 	static DoHouseWork instance;
@@ -31,8 +30,6 @@ void DoHouseWork::Execute(Robot* pr)
 		break;
 	}
 
-	if ((rand() % 10) < 1)
-		pr->GetFSM()->ChangeState(VisitBathroom::Instance());
 }
 
 void DoHouseWork::Exit(Robot* pr)
@@ -65,4 +62,15 @@ void VisitBathroom::Exit(Robot* pr)
 }
 
 
+RobotGlobalState* RobotGlobalState::Instance()
+{
+	static RobotGlobalState instance;
+	return &instance;
+}
+
+void RobotGlobalState::Execute(Robot* pr)
+{
+	if ((rand() % 10) < 1)
+		pr->GetFSM()->ChangeState(VisitBathroom::Instance());
+}
 

@@ -17,6 +17,7 @@ public:
 	{
 		m_pStateMachine = new StateMachine<Robot>(this);
 		m_pStateMachine->SetCurrentState(DoHouseWork::Instance());
+		m_pStateMachine->SetGlobalState(RobotGlobalState::Instance());
 	}
 
 	~Robot()
