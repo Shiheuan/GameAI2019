@@ -1,17 +1,19 @@
 #include <Windows.h>
 #include "Me.h"
+#include "Robot.h"
 #include <iostream>
 #include <conio.h>
-class Me;
+//class Me;
 
 int main()
 {
 	Me me(0);
+	Robot XBox(1);
 
 	for (int i =0; i < 60;i++)
 	{
 		me.Update();
-
+		XBox.Update();
 		Sleep(800);
 	}
 

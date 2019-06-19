@@ -118,6 +118,8 @@
     <ClInclude Include="BaseGameEntity.h" />
     <ClInclude Include="MyStates.h" />
     <ClInclude Include="Me.h" />
+    <ClInclude Include="Robot.h" />
+    <ClInclude Include="RobotOwnedStates.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateMachine.h" />
   </ItemGroup>
@@ -126,6 +128,8 @@
     <ClCompile Include="Me.cpp" />
     <ClCompile Include="MyStates.cpp" />
     <ClCompile Include="BaseGameEntity.cpp" />
+    <ClCompile Include="Robot.cpp" />
+    <ClCompile Include="RobotOwnedStates.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

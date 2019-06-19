@@ -1,6 +1,7 @@
 #pragma once
 #include <cassert>
 #include "State.h"
+#include <string>
 
 template <class entity_type>
 class StateMachine
