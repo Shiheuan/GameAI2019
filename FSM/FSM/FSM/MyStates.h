@@ -1,6 +1,7 @@
 #pragma once
 #include "State.h"
 #include "Me.h"
+#include "Telegram.h"
 #include <sys/stat.h>
 
 class GoWorkAndEarnMoney:public State<Me>
@@ -12,6 +13,7 @@ public:
 	virtual void Enter(Me* pMe);
 	virtual void Execute(Me* pMe);
 	virtual void Exit(Me* pMe);
+	virtual bool OnMessage(Me* pMe, const Telegram& msg) override;
 };
 
 class GoSchoolAndStudy:public State<Me>
@@ -23,6 +25,7 @@ public:
 	virtual void Enter(Me* pMe);
 	virtual void Execute(Me* pMe);
 	virtual void Exit(Me* pMe);
+	bool OnMessage(Me* pMe, const Telegram& msg) override;
 };
 
 class GoHomeAndSleep:public State<Me>
@@ -34,6 +37,7 @@ public:
 	virtual void Enter(Me* pMe);
 	virtual void Execute(Me* pMe);
 	virtual void Exit(Me* pMe);
+	bool OnMessage(Me* pMe, const Telegram& msg) override;
 };
  
 class GoBar:public State<Me>
@@ -45,6 +49,7 @@ public:
 	virtual void Enter(Me* pMe);
 	virtual void Execute(Me* pMe);
 	virtual void Exit(Me* pMe);
+	bool OnMessage(Me* pMe, const Telegram& msg) override;
 };
 
 class GoRestroom:public State<Me>
@@ -56,4 +61,5 @@ public:
 	virtual void Enter(Me*) override;
 	virtual void Execute(Me*) override;
 	virtual void Exit(Me*) override;
+	bool OnMessage(Me* pMe, const Telegram& msg) override;
 };

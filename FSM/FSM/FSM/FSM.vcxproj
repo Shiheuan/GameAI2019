@@ -116,16 +116,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BaseGameEntity.h" />
+    <ClInclude Include="EntityManager.h" />
+    <ClInclude Include="MessageDispatcher.h" />
     <ClInclude Include="MyStates.h" />
     <ClInclude Include="Me.h" />
     <ClInclude Include="Robot.h" />
     <ClInclude Include="RobotOwnedStates.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateMachine.h" />
+    <ClInclude Include="Telegram.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Me.cpp" />
+    <ClCompile Include="MessageDispatcher.cpp" />
     <ClCompile Include="MyStates.cpp" />
     <ClCompile Include="BaseGameEntity.cpp" />
     <ClCompile Include="Robot.cpp" />

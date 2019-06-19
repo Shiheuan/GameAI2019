@@ -1,5 +1,6 @@
 #include "MyStates.h"
 #include <iostream>
+#include "MessageDispatcher.h"
 using std::cout;
 
 GoWorkAndEarnMoney* GoWorkAndEarnMoney::Instance()
@@ -41,6 +42,11 @@ void GoWorkAndEarnMoney::Execute(Me* pMe)
 void GoWorkAndEarnMoney::Exit(Me* pMe)
 {
 	cout << "\n" << "Me" << ": " << "Ah'm leaving the company with today's payment";
+}
+
+bool GoWorkAndEarnMoney::OnMessage(Me* pMe, const Telegram& msg)
+{
+	return false;
 }
 
 
@@ -87,6 +93,12 @@ void GoSchoolAndStudy::Exit(Me* pMe)
 	cout << "\n" << "Me" << ": " << "Leaving the School";
 }
 
+bool GoSchoolAndStudy::OnMessage(Me* pMe, const Telegram& msg)
+{
+	return false;
+}
+
+
 //---------
 
 GoHomeAndSleep* GoHomeAndSleep::Instance()
@@ -102,6 +114,11 @@ void GoHomeAndSleep::Enter(Me* pMe)
 	{
 		cout << "\n" << "Me" << ": " << "Walking home";
 		pMe->ChangeLocation(sweetHome);
+		Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY,
+			pMe->ID(), 
+			1, // 接收者 Robot 实例的ID
+			Msg_HiImHome, 
+			NO_ADDITIONAL_INFO);
 	}
 
 } 
@@ -132,6 +149,11 @@ void GoHomeAndSleep::Execute(Me* pMe)
 void GoHomeAndSleep::Exit(Me* pMe)
 {
 	cout << "\n" << "Me" << ": " << "Leaving the sweet home";
+}
+
+bool GoHomeAndSleep::OnMessage(Me* pMe, const Telegram& msg)
+{
+	return false;
 }
 
 //---------
@@ -169,6 +191,12 @@ void GoBar::Exit(Me* pMe)
 	cout << "\n" << "Me" << ": " << "Leaving the Beer Lady, feeling good";
 }
 
+bool GoBar::OnMessage(Me* pMe, const Telegram& msg)
+{
+	return false;
+}
+
+//---------
 GoRestroom* GoRestroom::Instance()
 {
 	static GoRestroom instance;
@@ -191,5 +219,10 @@ void GoRestroom::Execute(Me* pMe)
 void GoRestroom::Exit(Me* pMe)
 {
 	cout << "\n" << "Me" << ":" << "Now I go back where I belong";
+}
+
+bool GoRestroom::OnMessage(Me* pMe, const Telegram& msg)
+{
+	return false;
 }
 

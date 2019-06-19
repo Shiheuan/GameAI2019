@@ -38,6 +38,7 @@ public:
 	Me(int ID);
 	~Me();
 	void Update();
+	bool HandleMessage(const Telegram& msg) override;
 	StateMachine<Me>* GetFSM()const { return m_pStateMachine; }
 
 	// change to state machine.

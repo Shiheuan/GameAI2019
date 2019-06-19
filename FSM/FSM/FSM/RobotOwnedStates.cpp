@@ -37,6 +37,11 @@ void DoHouseWork::Exit(Robot* pr)
 	
 }
 
+bool DoHouseWork::OnMessage(Robot*, const Telegram&)
+{
+	return false;
+}
+
 
 VisitBathroom* VisitBathroom::Instance()
 {
@@ -61,6 +66,11 @@ void VisitBathroom::Exit(Robot* pr)
 	std::cout << "\n" << "Robot" << ": Leavin' the Jon";
 }
 
+bool VisitBathroom::OnMessage(Robot*, const Telegram&)
+{
+	return false;
+}
+
 
 RobotGlobalState* RobotGlobalState::Instance()
 {
@@ -72,5 +82,19 @@ void RobotGlobalState::Execute(Robot* pr)
 {
 	if ((rand() % 10) < 1)
 		pr->GetFSM()->ChangeState(VisitBathroom::Instance());
+}
+
+bool RobotGlobalState::OnMessage(Robot* pr, const Telegram& msg)
+{
+	switch(msg.Msg)
+	{
+	case Msg_HiImHome:
+		{
+			std::cout << "\n Message handled by " << "Robot";
+			std::cout << "\n" << "Robot" << ": Hi master, Let me make you some of mah fine country stew";
+		}
+		return true;
+	}
+	return false;
 }
 

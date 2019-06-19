@@ -26,6 +26,7 @@ public:
 	}
 
 	void Update();
+	bool HandleMessage(const Telegram& msg) override;
 	StateMachine<Robot>* GetFSM()const
 	{
 		return m_pStateMachine;

@@ -17,6 +17,7 @@ public:
 	virtual void Enter(Robot* pr) override;
 	virtual void Execute(Robot* pr) override;
 	virtual void Exit(Robot* pr) override;
+	bool OnMessage(Robot*, const Telegram&) override;
 };
 
 class VisitBathroom : public State<Robot>
@@ -32,6 +33,7 @@ public:
 	virtual void Enter(Robot* pr) override;
 	virtual void Execute(Robot* pr) override;
 	virtual void Exit(Robot* pr) override;
+	bool OnMessage(Robot*, const Telegram&) override;
 };
 
 class RobotGlobalState : public State<Robot>
@@ -45,4 +47,5 @@ public:
 	virtual void Enter(Robot* pr) override{};
 	virtual void Execute(Robot* pr) override;
 	virtual void Exit(Robot* pr) override{};
+	bool OnMessage(Robot* , const Telegram&) override;
 };
