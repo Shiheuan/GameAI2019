@@ -63,3 +63,18 @@ public:
 	virtual void Exit(Me*) override;
 	bool OnMessage(Me* pMe, const Telegram& msg) override;
 };
+
+class EatStew : public State<Me>
+{
+private:
+	EatStew(){};
+
+	EatStew(const EatStew&);
+	EatStew& operator=(const EatStew&);
+public:
+	static EatStew* Instance();
+	void Enter(Me*) override;
+	void Execute(Me*) override;
+	void Exit(Me*) override;
+	bool OnMessage(Me*, const Telegram&) override { return false; };
+};

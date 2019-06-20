@@ -153,6 +153,17 @@ void GoHomeAndSleep::Exit(Me* pMe)
 
 bool GoHomeAndSleep::OnMessage(Me* pMe, const Telegram& msg)
 {
+	switch (msg.Msg)
+	{
+	case Msg_StewReady:
+		std::cout << "\n Message handled by " << "Me" << " at Time: ";
+
+		std::cout << "\n" << "Me" << ": Okay Hun, ahm a comin'!";
+
+		pMe->GetFSM()->ChangeState(EatStew::Instance());
+		std::cout << "\n&&&&this time return true;&&&&";
+		return true;
+	}
 	return false;
 }
 
@@ -225,4 +236,27 @@ bool GoRestroom::OnMessage(Me* pMe, const Telegram& msg)
 {
 	return false;
 }
+
+EatStew* EatStew::Instance()
+{
+	static EatStew instance;
+	return &instance;
+}
+
+void EatStew::Enter(Me*)
+{
+	std::cout << "\n" << "Me" << ": Smells Reaaaal good";
+}
+
+void EatStew::Execute(Me* pMe)
+{
+	std::cout << "\n" << "Me" << ": Tastes real good too";
+	pMe->GetFSM()->RevertToPreviousState();
+}
+
+void EatStew::Exit(Me*)
+{
+	std::cout << "\n" << "Me" << ": Thankya li'lle bot. Ah better get back to whatever ah wuz doin'";
+}
+
 

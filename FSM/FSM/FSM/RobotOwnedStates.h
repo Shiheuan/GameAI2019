@@ -36,6 +36,20 @@ public:
 	bool OnMessage(Robot*, const Telegram&) override;
 };
 
+class CookStew : public State<Robot>
+{
+private:
+	CookStew(){}
+	CookStew(const CookStew&);
+	CookStew& operator=(const CookStew);
+public:
+	static CookStew* Instance();
+	virtual void Enter(Robot*) override;
+	void Execute(Robot*) override;
+	void Exit(Robot*) override;
+	bool OnMessage(Robot*, const Telegram&) override;
+};
+
 class RobotGlobalState : public State<Robot>
 {
 private:

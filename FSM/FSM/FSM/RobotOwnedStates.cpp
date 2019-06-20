@@ -1,6 +1,7 @@
 #include "RobotOwnedStates.h"
 #include "Robot.h"
 #include <iostream>
+#include "MessageDispatcher.h"
 
 DoHouseWork* DoHouseWork::Instance()
 {
@@ -71,6 +72,59 @@ bool VisitBathroom::OnMessage(Robot*, const Telegram&)
 	return false;
 }
 
+CookStew* CookStew::Instance()
+{
+	static CookStew instance;
+	return &instance;
+}
+
+void CookStew::Enter(Robot* pr)
+{
+	if (!pr->Cooking())
+	{
+		std::cout << "\n" << "Robot" << ": Puttin' the stew in the oven";
+		Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY,
+			pr->ID(),
+			pr->ID(),
+			Msg_StewReady,
+			NO_ADDITIONAL_INFO);
+		pr->SetCooking(true);
+	}
+}
+
+void CookStew::Execute(Robot*)
+{
+	std::cout << "\n" << "Robot" << ": Fussin' over food";
+}
+
+void CookStew::Exit(Robot*)
+{
+	std::cout << "\n" << "Robot" << ": Puttin' the stew on the table";
+}
+
+bool CookStew::OnMessage(Robot* pr, const Telegram& msg)
+{
+	switch(msg.Msg)
+	{
+	case Msg_StewReady:
+		{
+			std::cout << "\n Message received by " << "Robot" << "at Time:";
+			std::cout << "\n" << "Robot" << ": StewReady! Lets eat";
+
+			Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY,
+				pr->ID(),
+				0,
+				Msg_StewReady,
+				NO_ADDITIONAL_INFO);
+			pr->SetCooking(false);
+			pr->GetFSM()->ChangeState(DoHouseWork::Instance());
+		}
+		return true;
+	}
+	return false;
+}
+
+
 
 RobotGlobalState* RobotGlobalState::Instance()
 {
@@ -92,6 +146,8 @@ bool RobotGlobalState::OnMessage(Robot* pr, const Telegram& msg)
 		{
 			std::cout << "\n Message handled by " << "Robot";
 			std::cout << "\n" << "Robot" << ": Hi master, Let me make you some of mah fine country stew";
+
+			pr->GetFSM()->ChangeState(CookStew::Instance());
 		}
 		return true;
 	}

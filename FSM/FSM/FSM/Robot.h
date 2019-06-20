@@ -10,6 +10,7 @@ class Robot : public BaseGameEntity
 private:
 	StateMachine<Robot>* m_pStateMachine;
 	location_type m_Location;
+	bool m_bCooking;
 
 public:
 	Robot(int id):BaseGameEntity(id),
@@ -34,4 +35,7 @@ public:
 
 	location_type Location()const { return m_Location; }
 	void ChangeLocation(const location_type location) { m_Location = location; }
+
+	bool Cooking()const { return m_bCooking; }
+	void SetCooking(bool val) { m_bCooking = val; }
 };
