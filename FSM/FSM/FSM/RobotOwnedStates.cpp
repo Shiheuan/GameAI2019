@@ -2,6 +2,8 @@
 #include "Robot.h"
 #include <iostream>
 #include "MessageDispatcher.h"
+#include "HomeMadeTimer.h"
+#include "EntityNames.h"
 
 DoHouseWork* DoHouseWork::Instance()
 {
@@ -80,16 +82,15 @@ CookStew* CookStew::Instance()
 
 void CookStew::Enter(Robot* pr)
 {
-	//if (!pr->Cooking())
+	if (!pr->Cooking())
 	{
 		std::cout << "\n" << "Robot" << ": Puttin' the stew in the oven";
-		Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY,
+		Dispatch->DispatchMessages(1.5,
 			pr->ID(),
 			pr->ID(),
 			Msg_StewReady,
 			NO_ADDITIONAL_INFO);
-		// here the food is ready immediately, set the bool after "OnMessage()"
-		//pr->SetCooking(true);
+		pr->SetCooking(true);
 	}
 }
 
@@ -109,15 +110,15 @@ bool CookStew::OnMessage(Robot* pr, const Telegram& msg)
 	{
 	case Msg_StewReady:
 		{
-			std::cout << "\n Message received by " << "Robot" << " at Time:";
+			std::cout << "\n Message received by " << GetNameOfEntity(pr->ID()) << " at Time: " << HMTimer->GetCurrentHMTime();
 			std::cout << "\n" << "Robot" << ": StewReady! Lets eat";
 
-			Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY,
+			Dispatch->DispatchMessages(SEND_MSG_IMMEDIATELY,
 				pr->ID(),
 				0,
 				Msg_StewReady,
 				NO_ADDITIONAL_INFO);
-			//pr->SetCooking(false);
+			pr->SetCooking(false);
 			pr->GetFSM()->ChangeState(DoHouseWork::Instance());
 		}
 		return true;

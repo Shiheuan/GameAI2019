@@ -1,6 +1,8 @@
 #include "MyStates.h"
 #include <iostream>
 #include "MessageDispatcher.h"
+#include "HomeMadeTimer.h"
+#include "EntityNames.h"
 using std::cout;
 
 GoWorkAndEarnMoney* GoWorkAndEarnMoney::Instance()
@@ -114,7 +116,7 @@ void GoHomeAndSleep::Enter(Me* pMe)
 	{
 		cout << "\n" << "Me" << ": " << "Walking home";
 		pMe->ChangeLocation(sweetHome);
-		Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY,
+		Dispatch->DispatchMessages(SEND_MSG_IMMEDIATELY,
 			pMe->ID(), 
 			1, // 接收者 Robot 实例的ID
 			Msg_HiImHome, 
@@ -127,7 +129,7 @@ void GoHomeAndSleep::Execute(Me* pMe)
 {
 	if (pMe->Rested())
 	{
-		cout << "\n" << "Me" << ": " << "What a God darn fantastic nap! Let me see where to go now...";
+		cout << "\n" << GetNameOfEntity(pMe->ID()) << ": " << "What a God darn fantastic nap! Let me see where to go now...";
 		if (pMe->FeelPoor())
 		{
 			pMe->GetFSM()->ChangeState(GoWorkAndEarnMoney::Instance());
@@ -156,7 +158,7 @@ bool GoHomeAndSleep::OnMessage(Me* pMe, const Telegram& msg)
 	switch (msg.Msg)
 	{
 	case Msg_StewReady:
-		std::cout << "\n Message handled by " << "Me" << " at Time: ";
+		std::cout << "\n Message handled by " << "Me" << " at Time: " << HMTimer->GetCurrentHMTime();;
 
 		std::cout << "\n" << "Me" << ": Okay Hun, ahm a comin'!";
 

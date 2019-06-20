@@ -24,7 +24,7 @@ private:
 	MessageDispatcher& operator=(const MessageDispatcher&);	
 public:
 	static MessageDispatcher* Instance();
-	void DispatchMessage(double delay, int sender, int receiver, int msg, void* ExtraInfo);
+	void DispatchMessages(double delay, int sender, int receiver, int msg, void* ExtraInfo);
 	void DispatchDelayedMessages();
 };
 

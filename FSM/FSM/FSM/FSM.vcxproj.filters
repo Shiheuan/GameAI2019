@@ -45,6 +45,12 @@
     <ClInclude Include="MessageDispatcher.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="HomeMadeTimer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityNames.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Me.cpp">

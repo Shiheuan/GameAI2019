@@ -1,5 +1,7 @@
 #include "MessageDispatcher.h"
 #include "EntityManager.h"
+#include "HomeMadeTimer.h"
+#include "EntityNames.h"
 
 MessageDispatcher* MessageDispatcher::Instance()
 {
@@ -16,7 +18,7 @@ void MessageDispatcher::Discharge(BaseGameEntity* pReceiver, const Telegram& msg
 }
 
 
-void MessageDispatcher::DispatchMessage(double delay, int sender, int receiver, int msg, void* ExtraInfo)
+void MessageDispatcher::DispatchMessages(double delay, int sender, int receiver, int msg, void* ExtraInfo)
 {
 	BaseGameEntity* pReceiver = EntityMgr->GetEntityFromID(receiver);
 	BaseGameEntity* pSender = EntityMgr->GetEntityFromID(sender);
@@ -31,26 +33,31 @@ void MessageDispatcher::DispatchMessage(double delay, int sender, int receiver, 
 	Telegram telegram(delay, sender, receiver, msg, ExtraInfo);
 	if (delay <= 0.0)
 	{
+		std::cout << "\n Instant telegram dispatched at time: " << HMTimer->GetCurrentHMTime() << " by " << GetNameOfEntity(pSender->ID()) << " for " << GetNameOfEntity(pReceiver->ID()) << ". Msg is " << MsgToStr(msg);
+		
 		Discharge(pReceiver, telegram);
 	}
-	//else
-	//{
-	//	double CurrentTime = Clock->GetCurrentTime();
-	//	telegram.DispatchTime = CurrentTime + delay;
-	//	PriorityQ.insert(telegram);
-	//}
+	else
+	{
+		double CurrentTime = HMTimer->GetCurrentHMTime();
+		telegram.DispatchTime = CurrentTime + delay;
+		PriorityQ.insert(telegram);
+
+		std::cout << "\n Delayed telegram from " << GetNameOfEntity(pSender->ID()) << " for " << GetNameOfEntity(pReceiver->ID()) << ". Msg is " << MsgToStr(msg);
+	}
 }
 
 void MessageDispatcher::DispatchDelayedMessages()
 {
-	//double CurrentTime = Clock->GetCurrentTime();
-	//while((PriorityQ.begin()->DispatchTime < CurrentTime &&
-	//	  (PriorityQ.begin()->DispatchTime > 0)))
-	//{
-	//	Telegram telegram = *PriorityQ.begin();
-	//	BaseGameEntity* pReceiver = EntityMgr->GetEntityFromID(telegram.Receiver);
-	//	Discharge(pReceiver, telegram);
-	//	PriorityQ.erase(PriorityQ.begin());
-	//}
+	double CurrentTime = HMTimer->GetCurrentHMTime();
+	while((!PriorityQ.empty()) &&
+		  (PriorityQ.begin()->DispatchTime < CurrentTime &&
+		  (PriorityQ.begin()->DispatchTime > 0)))
+	{
+		Telegram telegram = *PriorityQ.begin();
+		BaseGameEntity* pReceiver = EntityMgr->GetEntityFromID(telegram.Receiver);
+		Discharge(pReceiver, telegram);
+		PriorityQ.erase(PriorityQ.begin());
+	}
 }
 

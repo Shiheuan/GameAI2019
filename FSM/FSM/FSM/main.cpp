@@ -4,6 +4,7 @@
 #include <iostream>
 #include <conio.h>
 #include "EntityManager.h"
+#include "MessageDispatcher.h"
 //class Me;
 
 int main()
@@ -18,6 +19,8 @@ int main()
 	{
 		me->Update();
 		bot->Update();
+
+		Dispatch->DispatchDelayedMessages();
 		Sleep(800);
 	}
 
