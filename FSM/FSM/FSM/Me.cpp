@@ -1,6 +1,7 @@
 #include "Me.h"
 #include <cassert>
 #include "MyStates.h"
+#include "ConsoleUtils.h"
 
 Me::Me(int ID) : BaseGameEntity(ID),
 				m_Location(sweetHome),
@@ -73,10 +74,7 @@ bool Me::FeelPoor() const
 
 void Me::Update()
 {
-	//if (m_pCurrentState)
-	//{
-	//	m_pCurrentState->Execute(this);
-	//}
+	SetTextColor(MY_COLOR);
 	m_pStateMachine->Update();
 }
 

@@ -5,6 +5,7 @@
 #include <conio.h>
 #include "EntityManager.h"
 #include "MessageDispatcher.h"
+#include "ConsoleUtils.h"
 //class Me;
 
 int main()
@@ -15,7 +16,7 @@ int main()
 	EntityMgr->RegisterEntity(me);
 	EntityMgr->RegisterEntity(bot);
 
-	for (int i =0; i < 60;i++)
+	for (int i =0; i < 20;i++)
 	{
 		me->Update();
 		bot->Update();
@@ -24,6 +25,7 @@ int main()
 		Sleep(800);
 	}
 
+	SetTextColor(FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
 	std::cout << "\n\nPress any Key to continue" << std::endl;
 
 	delete me;

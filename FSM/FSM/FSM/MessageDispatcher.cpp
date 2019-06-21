@@ -20,11 +20,14 @@ void MessageDispatcher::Discharge(BaseGameEntity* pReceiver, const Telegram& msg
 
 void MessageDispatcher::DispatchMessages(double delay, int sender, int receiver, int msg, void* ExtraInfo)
 {
+	SetTextColor(MESSAGE_COLOR);
+
 	BaseGameEntity* pReceiver = EntityMgr->GetEntityFromID(receiver);
 	BaseGameEntity* pSender = EntityMgr->GetEntityFromID(sender);
 
 	if(pReceiver == NULL)
 	{
+		SetTextColor(MESSAGE_COLOR);
 		std::cout << "\n Warning! No Receiver with ID of " << receiver << " found";
 		
 		return;
@@ -33,6 +36,8 @@ void MessageDispatcher::DispatchMessages(double delay, int sender, int receiver,
 	Telegram telegram(delay, sender, receiver, msg, ExtraInfo);
 	if (delay <= 0.0)
 	{
+		SetTextColor(MESSAGE_COLOR);
+
 		std::cout << "\n Instant telegram dispatched at time: " << HMTimer->GetCurrentHMTime() << " by " << GetNameOfEntity(pSender->ID()) << " for " << GetNameOfEntity(pReceiver->ID()) << ". Msg is " << MsgToStr(msg);
 		
 		Discharge(pReceiver, telegram);
@@ -49,6 +54,8 @@ void MessageDispatcher::DispatchMessages(double delay, int sender, int receiver,
 
 void MessageDispatcher::DispatchDelayedMessages()
 {
+	SetTextColor(MESSAGE_COLOR);
+
 	double CurrentTime = HMTimer->GetCurrentHMTime();
 	while((!PriorityQ.empty()) &&
 		  (PriorityQ.begin()->DispatchTime < CurrentTime &&

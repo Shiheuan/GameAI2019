@@ -116,6 +116,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BaseGameEntity.h" />
+    <ClInclude Include="ConsoleUtils.h" />
     <ClInclude Include="EntityManager.h" />
     <ClInclude Include="EntityNames.h" />
     <ClInclude Include="HomeMadeTimer.h" />

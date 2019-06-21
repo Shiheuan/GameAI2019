@@ -1,7 +1,10 @@
 #include "Robot.h"
+#include "ConsoleUtils.h"
 
 void Robot::Update()
 {
+	SetTextColor(ROBOT_COLOR);
+
 	m_pStateMachine->Update();
 }
 

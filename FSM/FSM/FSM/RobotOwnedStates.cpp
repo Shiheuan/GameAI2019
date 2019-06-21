@@ -19,6 +19,7 @@ void DoHouseWork::Enter(Robot* pr)
 
 void DoHouseWork::Execute(Robot* pr)
 {
+	
 	const int index = rand() % 3;
 	switch(index)
 	{
@@ -101,16 +102,22 @@ void CookStew::Execute(Robot*)
 
 void CookStew::Exit(Robot*)
 {
+	SetTextColor(ROBOT_COLOR);
+
 	std::cout << "\n" << "Robot" << ": Puttin' the stew on the table";
 }
 
 bool CookStew::OnMessage(Robot* pr, const Telegram& msg)
 {
+	SetTextColor(MESSAGE_COLOR);
+
 	switch(msg.Msg)
 	{
 	case Msg_StewReady:
 		{
 			std::cout << "\n Message received by " << GetNameOfEntity(pr->ID()) << " at Time: " << HMTimer->GetCurrentHMTime();
+
+			SetTextColor(ROBOT_COLOR);
 			std::cout << "\n" << "Robot" << ": StewReady! Lets eat";
 
 			Dispatch->DispatchMessages(SEND_MSG_IMMEDIATELY,
@@ -142,11 +149,16 @@ void RobotGlobalState::Execute(Robot* pr)
 
 bool RobotGlobalState::OnMessage(Robot* pr, const Telegram& msg)
 {
+	SetTextColor(MESSAGE_COLOR);
+
 	switch(msg.Msg)
 	{
 	case Msg_HiImHome:
 		{
 			std::cout << "\n Message handled by " << "Robot";
+
+			SetTextColor(ROBOT_COLOR);
+
 			std::cout << "\n" << "Robot" << ": Hi master, Let me make you some of mah fine country stew";
 
 			pr->GetFSM()->ChangeState(CookStew::Instance());

@@ -118,7 +118,7 @@ void GoHomeAndSleep::Enter(Me* pMe)
 		pMe->ChangeLocation(sweetHome);
 		Dispatch->DispatchMessages(SEND_MSG_IMMEDIATELY,
 			pMe->ID(), 
-			1, // 接收者 Robot 实例的ID
+			ent_bot, // 接收者 Robot 实例的ID
 			Msg_HiImHome, 
 			NO_ADDITIONAL_INFO);
 	}
@@ -155,10 +155,14 @@ void GoHomeAndSleep::Exit(Me* pMe)
 
 bool GoHomeAndSleep::OnMessage(Me* pMe, const Telegram& msg)
 {
+	SetTextColor(MESSAGE_COLOR);
+
 	switch (msg.Msg)
 	{
 	case Msg_StewReady:
 		std::cout << "\n Message handled by " << "Me" << " at Time: " << HMTimer->GetCurrentHMTime();;
+
+		SetTextColor(MY_COLOR);
 
 		std::cout << "\n" << "Me" << ": Okay Hun, ahm a comin'!";
 
